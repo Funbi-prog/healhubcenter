@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealHubCenter</title>
+    <!-- Add this in the <head> section or before closing </body> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <img src="/img/logo.png" alt="HealHub Logo" class="h-10">
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-6">
+                <a href="home.html" class="text-gray-700 hover:text-[var(--primary-green)]">Home</a>
+
+                <a href="signin.html" class="text-gray-700 hover:text-blue-600">Get Involved</a>
+                <a href="about.html" class="text-gray-700 hover:text-blue-600">About</a>
+                <a href="community.html" class="text-gray-700 hover:text-blue-600">Blog</a>
+                <a href="cn.html" class="text-gray-700 hover:text-blue-600">Contact</a>
+            </div>
+            <div id="mobile-menu"
+                class="fixed top-0 left-0 w-64 h-full bg-white shadow transform -translate-x-full transition-transform duration-300 z-50">
+                <!-- Close button -->
+                <button id="close-menu" class="absolute top-4 right-4 text-gray-700 text-2xl">
+                    ✕
+                </button>
+                <!-- Menu content here -->
+            </div>
+
+            <!-- Hamburger Menu Button -->
+            <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none text-3xl z-50 relative">
+                ☰
+            </button>
+    </nav>
+
+    <!-- Mobile Sidebar Menu -->
+    <div id="mobile-menu"
+        class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform -translate-x-full transition-transform z-50">
+        <button id="close-menu" class="absolute top-4 right-4 text-gray-600 text-2xl">✖</button>
+        <div class="mt-16 flex flex-col space-y-6 text-lg px-6">
+            <a href="index.html" class="text-gray-700 hover:text-[var(--primary-green)]">Home</a>
+
+            <a href="signin.html" class="text-gray-700 hover:text-blue-600">Get Involved</a>
+            <a href="about.html" class="text-gray-700 hover:text-blue-600">About</a>
+            <a href="community.html" class="text-gray-700 hover:text-blue-600">Services</a>
+            <a href="cn.html" class="text-gray-700 hover:text-blue-600">Contact</a>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const menuBtn = document.getElementById("menu-btn");
+        const closeMenu = document.getElementById("close-menu");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const overlay = document.getElementById("overlay");
+
+        // Open menu
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.remove("-translate-x-full");
+            overlay.classList.remove("hidden");
+        });
+
+        // Close menu
+        closeMenu.addEventListener("click", () => {
+            mobileMenu.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+
+        // Also close when clicking the overlay
+        overlay.addEventListener("click", () => {
+            mobileMenu.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+
+    </script>
+    <!-- Hero Section -->
+    <section
+        class="relative text-white text-center flex items-end justify-center h-screen w-full bg-cover bg-center bg-no-repeat"
+        style="background-image: url('img/roudtable.avif'); background-size: cover; background-position: center; height: 70vh;">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- Dark overlay for readability -->
+
+        <div class="relative z-10 px-6 pb-16 max-w-lg text-center">
+            <p class="text-lg mt-2">WELCOME TO YOUR VIRTUAL ROUNDTABLE DISCUSSION.</p>
+        </div>
+    </section>
+
+    <!-- Why HealHubCenter? -->
+    <section class="container mx-auto py-16 px-6 text-center">
+        <h2 class="text-3xl font-thin text-[#53583a] animate-fadeIn">Mental Health & Stress Relief</h2>
+        <p class="text-[#53583a] mt-6 max-w-l mx-auto text-base font-light animate-slideUp">
+            At HealHubCenter, we know that life can be tough sometimes, and we all need a place to just let it
+            out without judgment. That’s why we’ve created this safe space for you. Our 50-minute roundtable
+            sessions are designed to help you de-stress, connect with others who get it, and maybe even find
+            some solutions for the challenges you're facing. </p>
+        <p class="text-[#53583a] mt-6 max-w-l mx-auto text-base font-light animate-slideUp">
+            Whether you're dealing with anxiety, depression, or just the everyday ups and downs of life, our
+        <ul class="list-disc pl-6 text-left text-[#53583a] text-base font-light animate-slideUp">
+            <li>10 people per session: 2 experts and 8 participants; including yourself </li>
+            <li>This space is a confidential space: You can decide to stay anonymous or reveal your identity, it’s your
+                choice</li>
+            <li>Guided by experts with real-time support</li>
+        </ul>
+
+        <section class="container mx-auto py-16 px-6 text-center">
+            <h3 class="text-3xl font-thin text-[#53583a] animate-fadeIn">Why a Roundtable Discussion?</h3>
+            <p class="text-[#53583a] mt-6 max-w-l mx-auto text-base font-light animate-slideUp">
+                We designed this format because sometimes, the best way to deal with mental health challenges is
+                by talking it out with others who truly understand. Our expert and solution provider will guide
+                the conversation, but you’re in control of your experience. It’s a space to express yourself,
+                share insights, and hear from others who are navigating similar struggles.
+            </p>
+            <p class="text-[#53583a] mt-6 max-w-l mx-auto text-base font-light animate-slideUp">
+                Whether you're dealing with stress, anxiety, or just need to vent, we’ve got your back. This is
+                about relief—for your mind and spirit.
+            </p>
+            <p class="text-[#53583a] mt-6 max-w-l mx-auto text-base font-light animate-slideUp">
+                We’ve created this space because we believe in providing a safe environment for everyone who
+                needs it. If you’ve been unsure about joining or just needed that extra push, here’s your chance
+                to give it a try. You’re not alone in this. The session lasts for 50 minutes, and once it’s over, you’ll
+                leave feeling lighter, understood,
+                and maybe even with some new tools to handle whatever life throws your way.
+            </p>
+        </section>
+        <a href="signin.html">
+            <button class="bg-[#9da05a] text-white px-6 py-3 rounded-lg hover:bg-[#996f5c] transition text-lg">
+                Join Now
+            </button>
+        </a>
+
+    </section>
+
+    <script>
+        document.getElementById("signInForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch("http://localhost:5000/api/auth/login", {  // FIXED ENDPOINT
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Save the token in localStorage
+                    localStorage.setItem("token", data.token);
+
+                    // Redirect to space page
+                    window.location.href = "space.html";
+                } else {
+                    alert(data.message || "Sign-in failed");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Something went wrong. Please try again.");
+            }
+        });
+
+    </script>
+
+
+
+    <!-- Footer Section -->
+    <footer class="relative bg-cover bg-center text-white py-16 md:py-20 font-light"
+        style="background-image: url('img/diverse-hands-circle.jpg'); background-size: cover; background-position: center;">
+
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+
+        <!-- Content Container -->
+        <div class="relative container mx-auto px-6 text-center">
+
+            <!-- Heading -->
+            <h2 class="text-l font-light max-w-xl mx-auto"> <!-- Reduced font size -->
+                Join thousands taking steps towards better mental well-being.
+            </h2>
+
+            <!-- CTA Button -->
+            <div class="mt-6">
+                <a href="signin.html"
+                    class="bg-white text-[#648943] px-5 py-2 rounded-lg font-medium hover:bg-gray-200 transition text-xs">
+                    Get Started Today
+                </a>
+            </div>
+
+            <div class="mt-8 text-xs font-light text-center">
+                <div class="mt-8 text-xs font-light text-center">
+                    <!-- First row: Single-word links first, then multi-word links -->
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="blog.html" class="hover:text-[#648943] transition">Blog</a>
+                        <a href="newsletters.html" class="hover:text-[#648943] transition">Newsletters</a>
+                        <a href="media.html" class="hover:text-[#648943] transition">Media</a>
+                        <a href="community.html" class="hover:text-[#648943] transition">Community</a>
+                        <a href="faqs.html" class="hover:text-[#648943] transition">FAQs</a>
+                        <a href="contact-support.html" class="hover:text-[#648943] transition">Contact Support</a>
+                        <a href="join-roundtable.html" class="hover:text-[#648943] transition">Join a Roundtable</a>
+                        <a href="immediate-support.html" class="hover:text-[#648943] transition">Immediate
+                            Support</a>
+                    </div>
+
+                    <!-- Second row: Terms & Privacy (Smaller spacing for balance) -->
+                    <div class="mt-3 flex justify-center gap-4">
+                        <a href="terms-of-service.html" class="hover:text-[#648943] transition">Terms of Service</a>
+                        <a href="privacy-policy.html" class="hover:text-[#648943] transition">Privacy Policy</a>
+                    </div>
+                </div>
+
+                <!-- Social Media Icons -->
+                <div class="mt-8 flex justify-center space-x-5 text-sm">
+                    <a href="mailto:support@healhubcenter.com" class="hover:text-gray-400 transition">
+                        <i class="fas fa-envelope"></i> <!-- Email Icon -->
+                    </a>
+                    <a href="https://linkedin.com/company/healhubcenter" target="_blank"
+                        class="hover:text-gray-400 transition">
+                        <i class="fab fa-linkedin"></i> <!-- LinkedIn Icon -->
+                    </a>
+                    <a href="https://twitter.com/healhubcenter" target="_blank" class="hover:text-gray-400 transition">
+                        <i class="fab fa-x-twitter"></i> <!-- X (Twitter) Icon -->
+                    </a>
+                    <a href="https://instagram.com/healhubcenter" target="_blank"
+                        class="hover:text-gray-400 transition">
+                        <i class="fab fa-instagram"></i> <!-- Instagram Icon -->
+                    </a>
+                </div>
+
+                <!-- Copyright & Legal Info -->
+                <div class="mt-6 text-gray-300 text-xs">
+                    &copy; 2025 HealHub Wellness Center. All Rights Reserved.
+                </div>
+            </div>
+    </footer>
