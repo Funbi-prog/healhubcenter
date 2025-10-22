@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealHubCenter</title>
+    <!-- Add this in the <head> section or before closing </body> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <img src="img/logo-removebg-preview (1).png" alt="HealHub Logo" class="h-10">
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-6">
+                <a href="signin.html" class="text-gray-700 hover:text-blue-600">Get Involved</a>
+                <a href="about.html" class="text-gray-700 hover:text-blue-600">About</a>
+                <a href="community.html" class="text-gray-700 hover:text-blue-600">Blog</a>
+                <a href="cn.html" class="text-gray-700 hover:text-blue-600">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none text-3xl">
+                ☰
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Sidebar Menu -->
+    <div id="mobile-menu"
+        class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform -translate-x-full transition-transform z-50">
+        <button id="close-menu" class="absolute top-4 right-4 text-gray-600 text-2xl">✖</button>
+        <div class="mt-16 flex flex-col space-y-6 text-lg px-6">
+            <a href="signin.html" class="text-gray-700 hover:text-blue-600">Get Involved</a>
+            <a href="about.html" class="text-gray-700 hover:text-blue-600">About</a>
+            <a href="community.html" class="text-gray-700 hover:text-blue-600">Services</a>
+            <a href="cn.html" class="text-gray-700 hover:text-blue-600">Contact</a>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const menuBtn = document.getElementById("menu-btn");
+        const closeMenu = document.getElementById("close-menu");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const overlay = document.getElementById("overlay");
+
+        // Open menu
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.remove("-translate-x-full");
+            overlay.classList.remove("hidden");
+        });
+
+        // Close menu
+        closeMenu.addEventListener("click", () => {
+            mobileMenu.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+
+        // Close menu when clicking outside
+        overlay.addEventListener("click", () => {
+            mobileMenu.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+    </script>
+
+    <!-- Hero Section -->
+    <section
+        class="relative text-white text-center flex items-end justify-center h-screen w-full bg-cover bg-center bg-no-repeat"
+        style="background-image: url('img/hero.jpg'); background-size: cover; background-position: center; height: 70vh;">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- Dark overlay for readability -->
+
+        <div class="relative z-10 px-6 pb-16 max-w-lg text-center">
+            <p class="text-lg mt-2">Find resources, support, and a safe space to heal.</p>
+            <a href="signup.html"
+                class="mt-4 inline-block bg-[#9da05a] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#996f5c] transition">
+                Join Our Community
+            </a>
+        </div>
+    </section>
+
+    <!-- Why HealHubCenter? -->
+    <section class="container mx-auto py-16 px-6 text-center">
+        <h2 class="text-3xl font-thin text-[#53583a] animate-fadeIn">A Safe Space for Every Struggle</h2>
+        <p class="text-[#53583a] mt-6 max-w-l mx-auto text-base font-light animate-slideUp">
+            You are not alone. Whether youre feeling overwhelmed, uncertain, or just need a space to breathe. We are
+            here
+            to help. Join nine others in a focused roundtable discussion on a topic that matters to you. With a guide to
+            lead
+            the conversation and a solution provider to offer real support, you're in a space where healing, clarity,
+            and
+            connection happen together. In this space, you can choose to stay anonymous or reveal your identity.
+        </p>
+    </section>
+
+    <!-- Image + Join Roundtable Button -->
+    <div class="relative mt-2"> <!-- Reduced margin-top for closer spacing -->
+        <img src="img/people.jpg" class="w-full max-w-3xl mx-auto rounded-lg shadow-lg" alt="About HealHubCenter">
+
+        <!-- Join Roundtable Button (Now Below the Image) -->
+        <div class="mt-4 flex justify-center">
+            <button id="openRoundtableModal"
+                class="bg-[#53583a] text-white px-6 py-3 rounded-lg hover:bg-[#996f5c] transition text-lg">
+                Join a Roundtable Discussion
+            </button>
+        </div>
+    </div>
+
+    <!-- Roundtable Modal -->
+    <div id="roundtableModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
+            <h3 class="text-xl text-[#996f5c] font-medium">Find Your Roundtable</h3>
+            <select id="roundtableTopic" class="mt-4 w-full px-4 py-2 border rounded-lg text-gray-600"
+                onchange="enableJoinButton()">
+                <option disabled selected>Pick a discussion that speaks to you...</option>
+                <option value="mh.html">Mental Health & Stress Relief</option>
+                <option value="ch.html">Career & Job Search Help</option>
+                <option value="finance.html">Financial Struggles & Advice</option>
+                <option value="relationship.html">Relationship Guidance</option>
+                <option value="business.html">Business & Startup Advice</option>
+                <option value="academics.html">Academic & Study Help</option>
+                <option value="bull.html">Anti-bullying & Cybercrime</option>
+                <option value="family.html">Family & Personal Growth</option>
+                <option value="legal.html">Legal & Administrative Assistance</option>
+                <option value="crisis.html">Emergency Help & Crisis Support</option>
+                <option value="ref.html">Refugee & Housing Relief</option>
+                <option value="addiction.html">Sobriety & Addiction Support</option>
+                <option value="disability.html">Empowering People with Disabilities</option>
+            </select>
+
+            <button id="joinButton"
+                class="mt-4 px-4 py-2 bg-[#9da05a] [#996f5c]  hover:bg-[#996f5c] text-white rounded-lg"
+                onclick="goToDiscussion()" disabled>
+                Join Discussion
+            </button>
+
+            <script>
+                function enableJoinButton() {
+                    document.getElementById("joinButton").disabled = false;
+                }
+
+                function goToDiscussion() {
+                    let selectedTopic = document.getElementById("roundtableTopic").value;
+                    if (selectedTopic) {
+                        window.location.href = selectedTopic; // Redirects to the selected topic page
+                    }
+                }
+            </script>
+
+
+            <button id="closeRoundtableModal" class="mt-4 text-[#996f5c] hover:underline text-sm">Close</button>
+        </div>
+    </div>
+    </section>
+
+    <!-- Support Selection Section -->
+    <section class="container mx-auto py-16 px-10 text-center">
+        <!-- Heading with Reduced Bottom Margin -->
+        <h2 class="text-4xl text-[#53583a] font-light mb-2">
+            Meet Bimpe – Your Trusted AI Solution Provider
+        </h2>
+
+        <!-- Introduction Section -->
+        <section class="text-center px-6 py-6 text-[#53583a]"> <!-- Reduced py-12 to py-6 -->
+            <div class="max-w-3xl mx-auto">
+
+                <!-- Introduction Paragraphs (Tighter Spacing) -->
+                <p class="mt-2 text-base md:text-lg font-light leading-relaxed">
+                    Ever felt like no one was really listening? Sometimes, all you need is a <strong>safe
+                        space</strong>—a place
+                    to express yourself freely, without fear of judgment. A space where your voice matters and your
+                    struggles
+                    meet real solutions.
+                </p>
+
+                <p class="mt-2 text-base md:text-lg font-light leading-relaxed">
+                    Unlike traditional AI that just gives robotic responses, <strong>Bimpe listens, checks in, and
+                        follows up.</strong>
+                    She remembers your struggles and actively helps you navigate them.
+                </p>
+
+                <p class="mt-2 text-base md:text-lg font-light leading-relaxed">
+                    Whether you're overwhelmed, struggling with time management, or facing financial challenges,
+                    Bimpe provides <strong>real, practical support</strong>—from reminders and structured plans to
+                    financial insights
+                    and direct connections to helpful resources.
+                <p class="text-[#53583a] mt-6 max-w-l mx-auto text-base font-light animate-slideUp">
+                <p class="text-[#53583a] mt-6 max-w-l mx-auto text-base font-light animate-slideUp">
+                    She’s not just here to talk; she’s here to help you </p>
+                take control,find clarity, and move forward.
+                </p>
+                <!-- Single Image Display (More Space Below Text) -->
+                <div class="relative mt-10">
+                    <img src="img/bimpe.jpg" class="w-full max-w-3xl mx-auto rounded-lg shadow-lg" alt="Bimpe">
+                    <!-- mt-10 for better spacing -->
+                </div>
+
+                <!-- Centered Message Bimpe Button -->
+                <div class="flex justify-center mt-6">
+                    <button id="openSelection"
+                        class="bg-[#53583a] text-white px-6 py-3 rounded-lg hover:bg-[#996f5c] transition text-lg">
+                        Message Bimpe
+                    </button>
+                </div>
+
+            </div>
+        </section>
+    </section>
+
+    <!-- Hidden Modal (Appears on Click) -->
+    <div id="issueSelectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-center">
+
+            <!-- Updated Heading -->
+            <h3 class="text-2xl text-[#996f5c] font-light">Hi, I'm Bimpe! What do you need help with today?</h3>
+
+            <!-- Updated Dropdown Options -->
+            <select id="userIssue" class="mt-4 w-full px-4 py-3 border rounded-lg text-gray-600">
+                <option disabled selected>Let me know how I can assist...</option>
+                <option value="finance">I need financial help</option>
+                <option value="job">I need a job</option>
+                <option value="legal">I need legal advice</option>
+                <option value="education">I need academic support</option>
+                <option value="mental-health">I need emotional support</option>
+                <option value="relationships">I need relationship guidance</option>
+            </select>
+
+            <!-- Updated Call-to-Action Button -->
+            <button id="messageBimpe"
+                class="mt-6 inline-block bg-[#53583a] text-white px-6 py-3 rounded-lg hover:bg-[#9da05a] transition text-lg">
+                Get Help from Bimpe
+            </button>
+
+            <button id="closeModal" class="mt-4 block text-[#996f5c] hover:underline">Close</button>
+        </div>
+    </div>
+
+    </div>
+    </section>
+    <section class="container mx-auto py-16 px-6 text-center bg-gray-50 shadow-lg rounded-2xl">
+        <h2 class="text-2xl font-light text-[#53583a] leading-snug tracking-wide">
+            For the Wounds You Were Told to Hide
+        </h2>
+        <p class="text-[#53583a] mt-6 mx-auto text-base font-light leading-relaxed tracking-normal max-w-3xl">
+            This is for the ones who carry silent trauma—the childhood wounds dressed up as personality,
+            the panic masked as “strong,” the addictions mislabeled as choices.
+            It’s for the ones who were told to pray harder, stay quiet, or get over it. We see you.
+        </p>
+        <p class="text-[#53583a] mt-4 mx-auto text-base font-light leading-relaxed tracking-normal max-w-3xl">
+            At HealHubCenter, healing isn't a buzzword. It’s a rebellion. Against stigma. Against shame. Against every
+            system
+            that said your pain wasn’t valid. Whether you’re drowning in overthinking, hiding your grief in plain sight,
+            or
+            exhausted by the fight to be okay—you belong here. Not fixed. Not perfect. Just real. Just human. And
+            finally safe.
+        </p>
+
+        <div class="relative mt-10 w-full max-w-4xl mx-auto">
+            <img src="img/comu.avif" alt="Addiction Recovery" class="w-full rounded-2xl shadow-lg" />
+            <div class="absolute inset-0 bg-black bg-opacity-40 rounded-2xl"></div>
+        </div>
+
+        <div class="bg-white p-6 shadow-md rounded-xl text-left mt-8 max-w-3xl mx-auto">
+            <h3 class="text-base font-medium text-[#53583a]">Join our community</h3>
+            <p class="text-[#53583a] mt-3 text-sm font-light">
+                Access expert insights, peer guidance, and roundtable discussions designed to support your recovery
+                journey.
+            </p>
+        </div>
+
+        <div class="mt-10 grid gap-5 max-w-3xl mx-auto">
+            <div class="bg-white p-5 shadow-md rounded-xl text-left">
+                <h3 class="text-base font-medium text-[#53583a]">Support Groups</h3>
+                <p class="text-[#53583a] mt-3 text-sm font-light">
+                    Join confidential roundtable discussions—safe spaces to connect, share, and grow with a guided peer
+                    community.
+                </p>
+            </div>
+
+            <div class="bg-white p-5 shadow-md rounded-xl text-left">
+                <h3 class="text-base font-medium text-[#53583a]">Coping Strategies</h3>
+                <p class="text-[#53583a] mt-3 text-sm font-light">
+                    Learn practical ways to manage cravings, triggers, and emotional overwhelm.
+                </p>
+            </div>
+
+            <div class="bg-white p-5 shadow-md rounded-xl text-left">
+                <h3 class="text-base font-medium text-[#53583a]">Emergency Help</h3>
+                <p class="text-[#53583a] mt-3 text-sm font-light">
+                    Get access to helplines and urgent support resources—fast, discreet, and real.
+                </p>
+            </div>
+        </div>
+
+        <div class="relative inline-block mt-12 text-center w-full">
+            <button id="dropdownBtn"
+                class="bg-[#53583a] text-white px-6 py-3 rounded-lg hover:bg-[#996f5c] transition text-sm">
+                Explore Options
+            </button>
+
+            <div id="dropdownMenu"
+                class="hidden absolute left-1/2 transform -translate-x-1/2 mt-3 w-72 bg-white shadow-2xl rounded-xl border border-gray-200 overflow-hidden z-50">
+                <ul class="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                    <li><a href="community.html"
+                            class="block px-6 py-4 text-[#53583a] text-sm font-medium hover:bg-gray-100 transition-all">Community</a>
+                    </li>
+                    <li><a href="roundtable.html"
+                            class="block px-6 py-4 text-[#53583a] text-sm font-medium hover:bg-gray-100 transition-all">Join
+                            Roundtable Discussion</a></li>
+                    <li><a href="cn.html"
+                            class="block px-6 py-4 text-[#53583a] text-sm font-medium hover:bg-gray-100 transition-all">Chat
+                            with Bimpe</a></li>
+                    <li><a href="immediate-help.html"
+                            class="block px-6 py-4 text-[#53583a] text-sm font-medium hover:bg-gray-100 transition-all">Immediate
+                            Help</a></li>
+                    <li><a href="sos.html"
+                            class="block px-6 py-4 text-red-600 text-sm font-medium hover:bg-red-100 transition-all">SOS</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('dropdownBtn').addEventListener('click', function () {
+            var dropdown = document.getElementById('dropdownMenu');
+            dropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function (event) {
+            var dropdown = document.getElementById('dropdownMenu');
+            var button = document.getElementById('dropdownBtn');
+            if (!dropdown.contains(event.target) && event.target !== button) {
+                dropdown.classList.add('hidden');
+            }
+        });
+    </script>
+
+    <section class="container mx-auto py-20 px-6 text-center bg-white">
+        <h2 class="text-4xl font-bold text-[#53583a] animate-fadeIn">Download <em>Before 21</em> — A Self-Help Ebook for
+            the Soul</h2>
+        <div class="relative mt-12 w-full max-w-3xl mx-auto">
+            <img src="img/before 21.jpg" alt="Before 21 Book Cover" class="w-full rounded-lg shadow-lg" />
+            <div class="absolute inset-0 bg-black bg-opacity-30 rounded-lg"></div>
+        </div>
+        <p class="text-[#53583a] mt-6 max-w-2xl mx-auto text-lg font-light animate-slideUp">
+            <strong><em>Before 21</em></strong> is not just a book — it's a healing companion for anyone who's ever felt
+            lost, broken, or misunderstood.
+            Whether you're overcoming insecurity, trauma, abuse, stigmatization, or the weight of personal loss, this
+            ebook is your step-by-step guide to rediscovering your voice and fighting back with purpose.
+        </p>
+
+        <p class="text-[#53583a] mt-4 max-w-xl mx-auto text-md font-light animate-slideUp delay-200">
+            Written by mental health advocate and innovator <strong>Funbi Akintade</strong>, this free self-help ebook
+            was born from real-life struggles and built to help others rise stronger.
+        </p>
+
+        <div class="mt-8 animate-fadeIn delay-300">
+            <a href="Before 21 bk.pdf" download
+                class="inline-block bg-[#53583a] hover:bg-[#3e4328] text-white text-lg font-medium px-8 py-4 rounded-lg shadow-md transition-all duration-300">
+                Download the Free Ebook
+            </a>
+        </div>
+    </section>
+
+
+    <!-- Dropdown Container -->
+    <div class="relative">
+        <!-- Dropdown Menu (Inside a Proper Parent) -->
+        <div id="dropdownMenu2"
+            class="hidden absolute left-1/2 transform -translate-x-1/2 mt-3 w-72 bg-white shadow-2xl rounded-xl border border-gray-200 overflow-hidden z-50">
+            <ul class="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                <li>
+                    <a href="community.html"
+                        class="block px-6 py-4 text-gray-800 font-medium hover:bg-gray-100 transition-all">
+                        Join our Community
+                    </a>
+                </li>
+                <li>
+                    <a href="roundtable.html"
+                        class="block px-6 py-4 text-gray-800 font-medium hover:bg-gray-100 transition-all">
+                        Join Roundtable Discussion
+                    </a>
+                </li>
+                <li>
+                    <a href="accessibility.html"
+                        class="block px-6 py-4 text-gray-800 font-medium hover:bg-gray-100 transition-all">
+                        Chat with Bimpe
+                    </a>
+                </li>
+                <li>
+                    <a href="advocacy.html"
+                        class="block px-6 py-4 text-gray-800 font-medium hover:bg-gray-100 transition-all">
+                        Advocacy & Rights
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+
+    <!-- JavaScript for Dropdown -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdownBtn = document.getElementById('dropdownBtn2');
+            const dropdownMenu = document.getElementById('dropdownMenu2');
+
+            dropdownBtn.addEventListener('click', function (event) {
+                event.stopPropagation();
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!dropdownMenu.contains(event.target) && event.target !== dropdownBtn) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+    </div>
+    </div>
+    </section>
+
+
+    <!-- About Section -->
+    <section class="container mx-auto py-8 px-6 text-center"> <!-- Increased py-6 to py-8 for better spacing -->
+        <h2 class="text-4xl font-thin text-[#53583a]">
+            About HealHubCenter
+        </h2>
+
+        <p class="mt-3 max-w-3xl mx-auto text-base font-light text-[#53583a] leading-relaxed">
+            Founded in 2023 by Funbi Akintade, HealHubCenter is breaking barriers in mental health care.
+            We provide 100% free therapy sessions—no hidden fees, no waitlists, just real help when you need it.
+            From anonymous support groupsto expert-backed self-help tools, we’re making mental health care accessible to
+            all.
+            Struggling alone? You don’t have to. Get the support you deserve—at zero cost.
+        </p>
+
+    </section>
+
+    <!-- Image Section with Overlay -->
+    <section class="relative px-2 py-4 -mt-2">
+        <div class="relative max-w-5xl mx-auto"> <!-- Increased container width -->
+
+            <!-- Image Wrapper (ensures overlay matches image size) -->
+            <div class="relative w-full md:w-[90%] lg:w-[85%] mx-auto"> <!-- Increased image width -->
+                <!-- Image -->
+                <img src="img/about.jpg" alt="HealHub Wellness Centre"
+                    class="w-full h-[80vh] object-cover rounded-lg shadow-lg"> <!-- Increased height -->
+
+                <!-- Dark Overlay (now correctly inside the wrapper) -->
+                <div class="absolute inset-0 bg-black opacity-50 rounded-lg"></div>
+            </div>
+        </div>
+
+        <!-- Button BELOW the image -->
+        <div class="mt-4 flex justify-center">
+            <a href="about.html"
+                class="bg-[#53583a] text-white px-5 py-2 rounded-lg hover:bg--[#996f5c]  transition text-md">
+                Our journey
+            </a>
+        </div>
+
+    </section>
+
+    
+    <section class="text-[#4F3A2D] py-28 md:py-36 px-6 text-center relative z-10 mb-16 md:mb-24">
+        <div class="max-w-xl w-full mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <!-- Heading -->
+            <h2 class="text-3xl md:text-4xl font-light uppercase tracking-wide">
+                Get Access to Life-Changing Opportunities
+            </h2>
+    
+            <!-- Subheading -->
+            <p class="text-sm md:text-base font-light mt-5 md:mt-6">
+                EXCLUSIVE MENTAL HEALTH SOLUTIONS, FUNDING ALERTS, REMOTE JOB OPENINGS,</strong> AND
+                PRIORITY ACCESS TO LIFE-CHANGING OPPORTUNITIES. ALL DELIVERED STRAIGHT TO YOUR
+                INBOX.
+            </p>
+    
+            <!-- Signup Form (Increased Width and Height) -->
+            <form action="http://localhost:5000/api/newsletter/signup" method="POST" class="mt-10 flex flex-col justify-center items-center gap-6 w-full max-w-lg mx-auto">
+                <!-- First Input (Name) -->
+                <input type="text" name="name" required placeholder="Enter your full name"
+                    class="w-full px-6 py-5 text-[#4F3A2D] bg-white border border-[#4F3A2D] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F3A2D] text-sm md:text-base shadow-md">
+    
+                <!-- Second Input (Email) -->
+                <input type="email" name="email" required placeholder="Enter your email"
+                    class="w-full px-6 py-5 text-[#4F3A2D] bg-white border border-[#4F3A2D] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F3A2D] text-sm md:text-base shadow-md">
+                
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="bg-[#9da05a] text-white px-6 py-3 rounded-lg hover:bg-[#996f5c] transition text-md">
+                    Get Exclusive Updates
+                </button>
+    
+                <!-- Disclaimer (Properly Placed) -->
+                <p class="text-xs text-[#6B5B4B] mt-2">
+                    Just real opportunities to help you grow and thrive.
+                </p>
+            </form>
+        </div>
+    </section>
+    
+
+    <!-- Footer Section -->
+    <footer class="relative bg-cover bg-center text-white py-16 md:py-20 font-light"
+        style="background-image: url('img/diverse-hands-circle.jpg'); background-size: cover; background-position: center;">
+
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+
+        <!-- Content Container -->
+        <div class="relative container mx-auto px-6 text-center">
+
+            <!-- Heading -->
+            <h2 class="text-l font-light max-w-xl mx-auto"> <!-- Reduced font size -->
+                Join thousands taking steps towards better mental well-being.
+            </h2>
+
+            <!-- CTA Button -->
+            <div class="mt-6">
+                <a href="signup.html"
+                    class="bg-white text-[#648943] px-5 py-2 rounded-lg font-medium hover:bg-gray-200 transition text-xs">
+                    Get Started Today
+                </a>
+            </div>
+
+            <div class="mt-8 text-xs font-light text-center">
+                <div class="mt-8 text-xs font-light text-center">
+                    <!-- First row: Single-word links first, then multi-word links -->
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="blog.html" class="hover:text-[#648943] transition">Blog</a>
+                        <a href="newsletters.html" class="hover:text-[#648943] transition">Newsletters</a>
+                        <a href="media.html" class="hover:text-[#648943] transition">Media</a>
+                        <a href="community.html" class="hover:text-[#648943] transition">Community</a>
+                        <a href="faqs.html" class="hover:text-[#648943] transition">FAQs</a>
+                        <a href="contact-support.html" class="hover:text-[#648943] transition">Contact Support</a>
+                        <a href="join-roundtable.html" class="hover:text-[#648943] transition">Join a Roundtable</a>
+                        <a href="immediate-support.html" class="hover:text-[#648943] transition">Immediate
+                            Support</a>
+                    </div>
+
+                    <!-- Second row: Terms & Privacy (Smaller spacing for balance) -->
+                    <div class="mt-3 flex justify-center gap-4">
+                        <a href="terms-of-service.html" class="hover:text-[#648943] transition">Terms of Service</a>
+                        <a href="privacy-policy.html" class="hover:text-[#648943] transition">Privacy Policy</a>
+                    </div>
+                </div>
+
+
+
+                <!-- Social Media Icons -->
+                <div class="mt-8 flex justify-center space-x-5 text-sm">
+                    <a href="mailto:support@healhubcenter.com" class="hover:text-gray-400 transition">
+                        <i class="fas fa-envelope"></i> <!-- Email Icon -->
+                    </a>
+                    <a href="https://linkedin.com/company/healhubcenter" target="_blank"
+                        class="hover:text-gray-400 transition">
+                        <i class="fab fa-linkedin"></i> <!-- LinkedIn Icon -->
+                    </a>
+                    <a href="https://twitter.com/healhubcenter" target="_blank" class="hover:text-gray-400 transition">
+                        <i class="fab fa-x-twitter"></i> <!-- X (Twitter) Icon -->
+                    </a>
+                    <a href="https://instagram.com/healhubcenter" target="_blank"
+                        class="hover:text-gray-400 transition">
+                        <i class="fab fa-instagram"></i> <!-- Instagram Icon -->
+                    </a>
+                </div>
+
+                <!-- Copyright & Legal Info -->
+                <div class="mt-6 text-gray-300 text-xs">
+                    &copy; 2025 HealHub Wellness Center. All Rights Reserved.
+                </div>
+            </div>
+    </footer>
+
+
+
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden bg-white shadow-md absolute top-16 left-0 w-full py-4">
+        <a href="signin.html" class="block px-6 py-2 text-gray-700 hover:text-blue-600">Get Involved</a>
+        <a href="about.html" class="block px-6 py-2 text-gray-700 hover:text-blue-600">About</a>
+        <a href="community.html" class="block px-6 py-2 text-gray-700 hover:text-blue-600">Services</a>
+        <a href="cn.html" class="block px-6 py-2 text-gray-700 hover:text-blue-600">Contact</a>
+    </div>
+
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const openModal = document.getElementById("openRoundtableModal");
+            const closeModal = document.getElementById("closeRoundtableModal");
+            const modal = document.getElementById("roundtableModal");
+            const roundtableDropdown = document.getElementById("roundtableTopic");
+            const joinButton = document.getElementById("joinRoundtable");
+
+            // Open Modal
+            openModal.addEventListener("click", () => {
+                modal.classList.remove("hidden");
+            });
+
+            // Close Modal
+            closeModal.addEventListener("click", () => {
+                modal.classList.add("hidden");
+            });
+
+            // Redirect to selected roundtable discussion page
+            joinButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                const selectedTopic = roundtableDropdown.value;
+                if (selectedTopic) {
+                    window.location.href = `roundtables.html?topic=${selectedTopic}`;
+                }
+            });
+        });
+        document.getElementById("openSelection").addEventListener("click", function () {
+            document.getElementById("issueSelectionModal").classList.remove("hidden");
+        });
+
+        document.getElementById("closeModal").addEventListener("click", function () {
+            document.getElementById("issueSelectionModal").classList.add("hidden");
+        });
+
+        if (menuBtn) {
+            menuBtn.addEventListener("click", () => {
+                document.getElementById("mobile-menu").classList.toggle("hidden");
+            });
+        }
+
+        const express = require('express');
+        const nodemailer = require('nodemailer');
+        const bodyParser = require('body-parser');
+        const cors = require('cors');
+        const app = express();
+        const port = 3000;
+
+        app.use(bodyParser.urlencoded({ extended: false }));
+        app.use(bodyParser.json());
+        app.use(cors());
+        app.use(express.static('public')); // if your HTML lives in public/
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'healhubcenter@gmail.com',
+                pass: 'your-app-password' // replace with actual app password
+            }
+        });
+
+        app.post('/subscribe', async (req, res) => {
+            const { name, email } = req.body;
+
+            const htmlMessage = `
+        <div style="font-family:sans-serif; color:#333; line-height:1.6;">
+            <h2>Welcome to HealHubCenter</h2>
+            <p>Dear ${name},</p>
+            <p>We are thrilled to welcome you to HealHubCenter...</p>
+            <p>You just subscribed to updates, and it means the world 🌍💚</p>
+            <br/>
+            <p>— The HealHub Team</p>
+        </div>
+    `;
+
+            try {
+                await transporter.sendMail({
+                    from: '"HealHub Center" <healhubcenter@gmail.com>',
+                    to: email,
+                    subject: 'Welcome to HealHubCenter 💚',
+                    html: htmlMessage
+                });
+
+                console.log('✅ Email sent to', email);
+                res.status(200).send('Success');
+            } catch (error) {
+                console.error('❌ Email failed:', error);
+                res.status(500).send('Error sending email');
+            }
+        });
+
+        app.listen(port, () => {
+            console.log(`🚀 Server running at http://localhost:${port}`);
+        });
+
+    </script>
+
+</body>
+
+</html>
