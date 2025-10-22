@@ -480,37 +480,38 @@
 
     </section>
 
-    
+
     <section class="text-[#4F3A2D] py-28 md:py-36 px-6 text-center relative z-10 mb-16 md:mb-24">
         <div class="max-w-xl w-full mx-auto bg-white p-8 rounded-lg shadow-lg">
             <!-- Heading -->
             <h2 class="text-3xl md:text-4xl font-light uppercase tracking-wide">
                 Get Access to Life-Changing Opportunities
             </h2>
-    
+
             <!-- Subheading -->
             <p class="text-sm md:text-base font-light mt-5 md:mt-6">
                 EXCLUSIVE MENTAL HEALTH SOLUTIONS, FUNDING ALERTS, REMOTE JOB OPENINGS,</strong> AND
                 PRIORITY ACCESS TO LIFE-CHANGING OPPORTUNITIES. ALL DELIVERED STRAIGHT TO YOUR
                 INBOX.
             </p>
-    
+
             <!-- Signup Form (Increased Width and Height) -->
-            <form action="http://localhost:5000/api/newsletter/signup" method="POST" class="mt-10 flex flex-col justify-center items-center gap-6 w-full max-w-lg mx-auto">
+            <form action="http://localhost:5000/api/newsletter/signup" method="POST"
+                class="mt-10 flex flex-col justify-center items-center gap-6 w-full max-w-lg mx-auto">
                 <!-- First Input (Name) -->
                 <input type="text" name="name" required placeholder="Enter your full name"
                     class="w-full px-6 py-5 text-[#4F3A2D] bg-white border border-[#4F3A2D] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F3A2D] text-sm md:text-base shadow-md">
-    
+
                 <!-- Second Input (Email) -->
                 <input type="email" name="email" required placeholder="Enter your email"
                     class="w-full px-6 py-5 text-[#4F3A2D] bg-white border border-[#4F3A2D] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4F3A2D] text-sm md:text-base shadow-md">
-                
+
                 <!-- Submit Button -->
                 <button type="submit"
                     class="bg-[#9da05a] text-white px-6 py-3 rounded-lg hover:bg-[#996f5c] transition text-md">
                     Get Exclusive Updates
                 </button>
-    
+
                 <!-- Disclaimer (Properly Placed) -->
                 <p class="text-xs text-[#6B5B4B] mt-2">
                     Just real opportunities to help you grow and thrive.
@@ -518,7 +519,7 @@
             </form>
         </div>
     </section>
-    
+
 
     <!-- Footer Section -->
     <footer class="relative bg-cover bg-center text-white py-16 md:py-20 font-light"
@@ -701,220 +702,143 @@
         });
 
     </script>
-<!-- BimpeBot Chat Widget -->
-<div id="bimpe-chat-widget"></div>
-<script>
-  const rasaServerUrl = "http://localhost:5005/webhooks/rest/webhook"; // Update when hosted
+    <!-- BimpeBot Chat Widget — HealHubCenter custom -->
+    <style>
+        /* Base styling */
+        #bimpe-chat-bubble {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background-color: #6B8E75;
+            /* sage */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            z-index: 9999;
+        }
 
-  // Create floating chat bubble
-  const chatContainer = document.createElement("div");
-  chatContainer.innerHTML = `
-    <div id="bimpe-bubble" 
-      style="
-        position: fixed; 
-        bottom: 25px; right: 25px; 
-        width: 60px; height: 60px; 
-        background: linear-gradient(145deg, #ff69b4, #ff85a2);
-        border-radius: 50%; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        color: white; 
-        font-size: 26px; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        cursor: pointer;
-        z-index: 9999;">
-        💬
+        #bimpe-chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            width: 340px;
+            max-width: 90%;
+            height: 460px;
+            background: #F7F7EB;
+            /* cream accent */
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9999;
+        }
+
+        #bimpe-chat-header {
+            background: #6B8E75;
+            color: white;
+            padding: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #bimpe-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            font-family: sans-serif;
+            font-size: 14px;
+            color: #2E2E2E;
+        }
+
+        #bimpe-input-container {
+            display: flex;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        #bimpe-input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            font-size: 14px;
+            outline: none;
+            background: transparent;
+            color: #2E2E2E;
+        }
+
+        #bimpe-send {
+            background: #6B8E75;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            cursor: pointer;
+        }
+
+        #bimpe-input::placeholder {
+            color: #888;
+        }
+    </style>
+
+    <div id="bimpe-chat-bubble">💬</div>
+    <div id="bimpe-chat-window">
+        <div id="bimpe-chat-header">Bimpe, Your Wellness Companion</div>
+        <div id="bimpe-messages">
+            <div style="text-align:center;margin-top:20px;color:#555;">Hi — I’m Bimpe. How are you feeling today?</div>
+        </div>
+        <div id="bimpe-input-container">
+            <input id="bimpe-input" type="text" placeholder="Type your message…">
+            <button id="bimpe-send">➤</button>
+        </div>
     </div>
-    <div id="bimpe-window" 
-      style="
-        position: fixed; 
-        bottom: 100px; right: 25px; 
-        width: 340px; height: 460px; 
-        background: white; 
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        display: none;
-        flex-direction: column;
-        overflow: hidden;
-        z-index: 9999;">
-        <div style="background:#ff69b4;color:white;padding:14px;font-weight:bold;text-align:center;">
-          🦋 Bimpe from HealHubCenter
-        </div>
-        <div id="bimpe-messages" style="flex:1;padding:10px;overflow-y:auto;font-family:sans-serif;font-size:14px;">
-          <div style="color:#555;text-align:center;margin-top:20px;">Hi, I’m Bimpe. How are you feeling today? 💭</div>
-        </div>
-        <div style="display:flex;border-top:1px solid #eee;">
-          <input id="bimpe-input" type="text" placeholder="Type your message..." 
-            style="flex:1;border:none;padding:10px;font-size:14px;outline:none;">
-          <button id="bimpe-send" 
-            style="background:#ff69b4;color:white;border:none;padding:10px 14px;cursor:pointer;">➤</button>
-        </div>
-    </div>
-  `;
-  document.body.appendChild(chatContainer);
 
-  // Toggle chat window
-  const bubble = document.getElementById("bimpe-bubble");
-  const windowBox = document.getElementById("bimpe-window");
-  bubble.onclick = () => {
-    windowBox.style.display = windowBox.style.display === "none" ? "flex" : "none";
-  };
+    <script>
+        const rasaServerUrl = "http://localhost:5005/webhooks/rest/webhook"; // update when live
+        const bubble = document.getElementById("bimpe-chat-bubble");
+        const windowBox = document.getElementById("bimpe-chat-window");
+        const messages = document.getElementById("bimpe-messages");
+        const input = document.getElementById("bimpe-input");
+        const sendBtn = document.getElementById("bimpe-send");
 
-  // Messaging logic
-  const input = document.getElementById("bimpe-input");
-  const sendBtn = document.getElementById("bimpe-send");
-  const messages = document.getElementById("bimpe-messages");
+        bubble.onclick = () => {
+            windowBox.style.display = (windowBox.style.display === "none" ? "flex" : "none");
+            if (windowBox.style.display === "flex") {
+                input.focus();
+            }
+        };
 
-  async function sendMessage() {
-    const msg = input.value.trim();
-    if (!msg) return;
-    messages.innerHTML += `<div style="text-align:right;margin:5px;color:#ff69b4;">${msg}</div>`;
-    input.value = "";
+        async function sendMessage() {
+            const msg = input.value.trim();
+            if (!msg) return;
+            messages.innerHTML += `<div style="text-align:right;margin:5px;color:#6B8E75;">${msg}</div>`;
+            input.value = "";
 
-    const res = await fetch(rasaServerUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sender: "user", message: msg }),
-    });
-    const data = await res.json();
-    data.forEach(r => {
-      messages.innerHTML += `<div style="text-align:left;margin:5px;color:#444;">${r.text}</div>`;
-    });
-    messages.scrollTop = messages.scrollHeight;
-  }
+            try {
+                const res = await fetch(rasaServerUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ sender: "user", message: msg })
+                });
+                const data = await res.json();
+                data.forEach(r => {
+                    messages.innerHTML += `<div style="text-align:left;margin:5px;color:#2E2E2E;">${r.text}</div>`;
+                });
+                messages.scrollTop = messages.scrollHeight;
+            } catch (error) {
+                messages.innerHTML += `<div style="text-align:left;margin:5px;color:#FF0000;">Sorry, I can’t reach Bimpe right now.</div>`;
+            }
+        }
 
-  sendBtn.onclick = sendMessage;
-  input.addEventListener("keypress", e => e.key === "Enter" && sendMessage());
-</script>
+        sendBtn.onclick = sendMessage;
+        input.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
+    </script>
 
 </body>
-<!-- BimpeBot Chat Widget — HealHubCenter custom -->
-<style>
-  /* Base styling */
-  #bimpe-chat-bubble {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    width: 60px;
-    height: 60px;
-    background-color: #6B8E75; /* sage */
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 26px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    cursor: pointer;
-    z-index: 9999;
-  }
-  #bimpe-chat-window {
-    position: fixed;
-    bottom: 100px;
-    right: 25px;
-    width: 340px;
-    max-width: 90%;
-    height: 460px;
-    background: #F7F7EB; /* cream accent */
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 9999;
-  }
-  #bimpe-chat-header {
-    background: #6B8E75;
-    color: white;
-    padding: 14px;
-    font-weight: bold;
-    text-align: center;
-  }
-  #bimpe-messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    font-family: sans-serif;
-    font-size: 14px;
-    color: #2E2E2E;
-  }
-  #bimpe-input-container {
-    display: flex;
-    border-top: 1px solid #E0E0E0;
-  }
-  #bimpe-input {
-    flex: 1;
-    border: none;
-    padding: 10px;
-    font-size: 14px;
-    outline: none;
-    background: transparent;
-    color: #2E2E2E;
-  }
-  #bimpe-send {
-    background: #6B8E75;
-    color: white;
-    border: none;
-    padding: 10px 14px;
-    cursor: pointer;
-  }
-  #bimpe-input::placeholder {
-    color: #888;
-  }
-</style>
-
-<div id="bimpe-chat-bubble">💬</div>
-<div id="bimpe-chat-window">
-  <div id="bimpe-chat-header">Bimpe, Your Wellness Companion</div>
-  <div id="bimpe-messages">
-    <div style="text-align:center;margin-top:20px;color:#555;">Hi — I’m Bimpe. How are you feeling today?</div>
-  </div>
-  <div id="bimpe-input-container">
-    <input id="bimpe-input" type="text" placeholder="Type your message…">
-    <button id="bimpe-send">➤</button>
-  </div>
-</div>
-
-<script>
-  const rasaServerUrl = "http://localhost:5005/webhooks/rest/webhook"; // update when live
-  const bubble = document.getElementById("bimpe-chat-bubble");
-  const windowBox = document.getElementById("bimpe-chat-window");
-  const messages = document.getElementById("bimpe-messages");
-  const input = document.getElementById("bimpe-input");
-  const sendBtn = document.getElementById("bimpe-send");
-
-  bubble.onclick = () => {
-    windowBox.style.display = (windowBox.style.display === "none" ? "flex" : "none");
-    if (windowBox.style.display === "flex") {
-      input.focus();
-    }
-  };
-
-  async function sendMessage() {
-    const msg = input.value.trim();
-    if (!msg) return;
-    messages.innerHTML += `<div style="text-align:right;margin:5px;color:#6B8E75;">${msg}</div>`;
-    input.value = "";
-
-    try {
-      const res = await fetch(rasaServerUrl, {
-        method: "POST",
-        headers: { "Content-Type":"application/json" },
-        body: JSON.stringify({ sender: "user", message: msg })
-      });
-      const data = await res.json();
-      data.forEach(r => {
-        messages.innerHTML += `<div style="text-align:left;margin:5px;color:#2E2E2E;">${r.text}</div>`;
-      });
-      messages.scrollTop = messages.scrollHeight;
-    } catch(error) {
-      messages.innerHTML += `<div style="text-align:left;margin:5px;color:#FF0000;">Sorry, I can’t reach Bimpe right now.</div>`;
-    }
-  }
-
-  sendBtn.onclick = sendMessage;
-  input.addEventListener("keypress", e => { if(e.key === "Enter") sendMessage(); });
-</script>
 
 </html>
